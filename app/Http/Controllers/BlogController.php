@@ -10,8 +10,8 @@ class BlogController extends Controller
     // Display a listing of blogs
     public function index()
     {
-        $blogs = Blog::all();
-        return response()->json($blogs);
+        $blogs = Blog::paginate(4);
+        return view('blogs.index', compact('blogs'));
     }
 
     // Store a newly created blog
@@ -36,7 +36,7 @@ class BlogController extends Controller
     public function show($id)
     {
         $blog = Blog::findOrFail($id);
-        return response()->json($blog);
+        return view('blogs.show', compact('blog'));
     }
 
     // Update the specified blog

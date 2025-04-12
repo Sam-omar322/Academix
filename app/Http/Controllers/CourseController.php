@@ -38,7 +38,7 @@ class CourseController extends Controller
     public function show($id)
     {
         $course = Course::findOrFail($id);
-        return response()->json($course);
+        return view('courses.details', compact('course'));
     }
 
     // Update the specified course
@@ -56,4 +56,20 @@ class CourseController extends Controller
         $course->delete();
         return response()->json(['message' => 'Course deleted successfully']);
     }
+
+    // Watch the course
+    public function watch(Course $course)
+    {
+        // $user = auth()->user();
+
+        // $hasAccess = $user->courses()->where('course_id', $course->id)->exists();
+
+        // if (! $hasAccess) {
+        //     return redirect()->route('courses.show', $course->id)
+        //                     ->with('error', __('يجب شراء الدورة أولًا لمشاهدتها'));
+        // }
+
+        return view('courses.watch', compact('course'));
+    }
+
 }

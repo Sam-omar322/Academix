@@ -64,23 +64,23 @@
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
                     <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/*') ? 'active' : '' }}" href="{{ route('home.index') }}">
+                        <a class="nav-link {{ request()->is('/*') ? 'active' : '' }}" href="{{ route('home.index') }}">
                             {{ __('صفحة الرئيسية') }}
                         </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link {{ request()->is('courses*') ? 'active' : '' }}" href="{{ route('courses.index') }}">
+                        <a class="nav-link {{ request()->is('courses*') ? 'active' : '' }}" href="{{ route('courses.index') }}">
                             {{ __('جميع الدورات') }}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            {{ __('Item') }}
+                        <a class="nav-link {{ request()->is('blogs*') ? 'active' : '' }}" href="{{ route('blogs.index') }}">
+                            {{ __('جميع المقالات') }}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            {{ __('Item') }}
+                            {{ __('دوراتي') }}
                         </a>
                     </li>
                 </ul>

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,17 +18,32 @@ use App\Http\Controllers\BlogController;
 |
 */
 
+// Course
 Route::Resource('courses', CourseController::class);
+Route::get('/courses/{course}/watch', [CourseController::class, 'watch'])
+    ->name('courses.watch');
+
+// Blogs
 Route::Resource('blogs', BlogController::class);
 
 // Comment
 Route::post('/c/{course:id}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/c/{course:id}/comments', [CommentController::class, 'index'])->name('comments.index');
 
-Route::get('/', function () {
-    return view('home.index');
-})->name('home.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
+
+// Admin Panel
+// Route::prefix('/admin')->middleware(['auth:sanctum', 'check.update.permission', 'verified'])->group(function () {
+Route::prefix('/admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    // Route::resource('/books', BookController::class);
+    // Route::resource('/categories', CategoryController::class);
+    // Route::resource('/authors', AuthorController::class);
+    // Route::resource('/publishers', PublisherController::class);
+    // Route::resource('/users', UserController::class);
+    // Route::get("/allOrders", [PurchaseController::class, 'allOrders'])->name('admin.allorders');
+});
 
 Route::middleware([
     'auth:sanctum',

@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Course;
+use App\Models\User;
+use App\Models\Blog;
 
 class AdminController extends Controller
 {
     public function index() {
-        // $n_of_books = Book::all()->count();
-        // $n_of_publishers = Publisher::all()->count();
-        // $n_of_authors = Author::all()->count();
-        // $n_of_categories = Category::all()->count();
-        return view("admin.index");
+        $n_of_courses = Course::all()->count();
+        $n_of_students = User::where('role', 'student')->count();
+        $n_of_blogs = Blog::all()->count();
+
+        return view("admin.index", compact("n_of_courses", "n_of_students", "n_of_blogs"));
     }
 }

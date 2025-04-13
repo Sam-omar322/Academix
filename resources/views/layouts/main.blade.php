@@ -69,12 +69,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('courses*') ? 'active' : '' }}" href="{{ route('courses.index') }}">
+                        <a class="nav-link {{ request()->is('courses*') ? 'active' : '' }}" href="{{ route('courses.showAll') }}">
                             {{ __('جميع الدورات') }}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('blogs*') ? 'active' : '' }}" href="{{ route('blogs.index') }}">
+                        <a class="nav-link {{ request()->is('blogs*') ? 'active' : '' }}" href="{{ route('blogs.showAll') }}">
                             {{ __('جميع المقالات') }}
                         </a>
                     </li>

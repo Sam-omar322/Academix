@@ -8,19 +8,24 @@
     <div class="container">
         <h1 class="display-4 fw-bold">{{ __('مرحبا بك في أكاديمكس') }}</h1>
         <p class="lead mt-3">{{ __('تعلم من أفضل الدورات التعليمية عبر الإنترنت، وابدأ رحلتك اليوم') }}</p>
-        <a href="{{ route('courses.index') }}" class="btn btn-light btn-lg mt-4 mb-4">{{ __('تصفح الدورات') }}</a>
+        <a href="{{ route('courses.showAll') }}" class="btn btn-light btn-lg mt-4 mb-4">{{ __('تصفح الدورات') }}</a>
     </div>
 </section>
 
 <!-- Courses Section -->
 <section class="py-5 bg-light rounded-3">
     <div class="container">
-        <h2 class="mb-4 text-center">{{ __('الدورات المميزة') }}</h2>
+        <h2 class="mb-4 text-center">{{ __('أحدث الدورات') }}</h2>
         <div class="row g-4">
+        @forelse($courses as $course)
             <div class="col-md-4">
-                <x-course-card :course="$courses[0]" />
+                <x-course-card :course="$course" />
             </div>
-            <!-- كرر البطاقات حسب الحاجة -->
+        @empty
+            <div class="col-12 text-center">
+                <p>{{ __('لا توجد دورات متاحة حاليًا.') }}</p>
+            </div>
+        @endforelse
         </div>
     </div>
 </section>

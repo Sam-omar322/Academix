@@ -8,13 +8,12 @@
 
         <ul class="nav flex-column">
             <li class="nav-item">
-                <!-- <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" href="{{ route('admin.index') }}"> -->
-                <a class="nav-link">
+                <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" href="{{ route('admin.index') }}">
                     <i class="fas fa-chart-pie"></i><span class="menu-text"> Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
+            <a class="nav-link {{ request()->is('admin/courses/*') ? 'active' : '' }}" href="{{ route('courses.index') }}">
                     <i class="fas fa-video"></i><span class="menu-text"> Courses</span>
                 </a>
             </li>

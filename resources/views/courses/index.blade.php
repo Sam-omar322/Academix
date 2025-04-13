@@ -17,5 +17,9 @@
             </div>
         @endforelse
     </div>
+
+    <div class="mt-4 d-flex justify-content-center">
+        {{ $courses->links() }}
+    </div>
 </div>
 @endsection

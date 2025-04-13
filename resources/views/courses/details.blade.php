@@ -13,7 +13,10 @@
 
     <!-- الفيديو -->
     <div class="ratio ratio-16x9 mb-4">
-        <iframe src="{{ $course->video_url }}" title="{{ $course->title }}" allowfullscreen></iframe>
+        <video width="100%" height="300" controls preload="none">
+            <source src="{{ asset($course->video_url) }}" type="video/mp4">
+            {{ __('المتصفح لا يدعم تشغيل الفيديو.') }}
+        </video>
     </div>
 
     <!-- سعر الدورة -->

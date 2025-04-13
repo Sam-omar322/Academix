@@ -54,4 +54,15 @@ class BlogController extends Controller
         $blog->delete();
         return response()->json(['message' => 'Blog deleted successfully']);
     }
+
+    public function showAllBlogs()
+    {
+        $blogs = Blog::paginate(4);
+        return view('blogs.index', compact('blogs'));
+    }
+    public function showDetails($id)
+    {
+        $blog = Blog::findOrFail($id);
+        return view('blogs.details', compact('blog'));
+    }
 }

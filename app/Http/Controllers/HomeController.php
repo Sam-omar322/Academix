@@ -10,8 +10,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $courses = Course::all();
-        $blogs = Blog::all();
+        $courses = Course::orderBy('created_at', 'desc')->paginate(4);
+        $blogs = Blog::orderBy('created_at', 'desc')->paginate(4);
         return view('home.index', compact('courses', 'blogs'));
     }
 }

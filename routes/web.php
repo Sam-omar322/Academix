@@ -19,12 +19,14 @@ use App\Http\Controllers\AdminController;
 */
 
 // Course
-Route::Resource('courses', CourseController::class);
-Route::get('/courses/{course}/watch', [CourseController::class, 'watch'])
-    ->name('courses.watch');
+Route::get('/courses', [CourseController::class, 'showAllCourses'])->name('courses.showAll');
+Route::get('/courses/{course}/details', [CourseController::class, 'showDetails'])->name('courses.details');
+Route::get('/courses/{course}/watch', [CourseController::class, 'watch'])->name('courses.watch');
 
 // Blogs
-Route::Resource('blogs', BlogController::class);
+Route::get('/blogs', [BlogController::class, 'showAllBlogs'])->name('blogs.showAll');
+Route::get('/blogs/{blog}/details', [BlogController::class, 'showDetails'])->name('blogs.details');
+
 
 // Comment
 Route::post('/c/{course:id}/comments', [CommentController::class, 'store'])->name('comments.store');
@@ -37,6 +39,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 // Route::prefix('/admin')->middleware(['auth:sanctum', 'check.update.permission', 'verified'])->group(function () {
 Route::prefix('/admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::Resource('/courses', CourseController::class);
+    Route::Resource('/blogs', BlogController::class);
     // Route::resource('/books', BookController::class);
     // Route::resource('/categories', CategoryController::class);
     // Route::resource('/authors', AuthorController::class);

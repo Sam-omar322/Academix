@@ -5,7 +5,7 @@
         <p class="card-text">{{ Str::limit($course->description, 100) }}</p>
         <div class="mt-auto d-flex justify-content-between align-items-center">
             <span class="text-primary fw-bold">{{ $course->price }} {{ __('ر.س') }}</span>
-            <a href="{{ route('courses.show', $course) }}" class="btn btn-sm btn-outline-primary">{{ __('عرض التفاصيل') }}</a>
+            <a href="{{ route('courses.details', $course) }}" class="btn btn-sm btn-outline-primary">{{ __('عرض التفاصيل') }}</a>
         </div>
     </div>
 </div>

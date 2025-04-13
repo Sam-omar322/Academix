@@ -16,7 +16,7 @@
 
 <!-- نموذج إضافة تعليق -->
 @auth
-<form action="{{ route('courses.comment', $course->id) }}" method="POST" class="mt-5">
+<form action="{{ route('comments.store', $course->id) }}" method="POST" class="mt-5">
     @csrf
     <div class="mb-3">
         <label for="content" class="form-label">{{ __('أضف تعليقك') }}</label>

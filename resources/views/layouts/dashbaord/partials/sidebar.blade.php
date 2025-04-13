@@ -14,17 +14,17 @@
             </li>
             <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/courses/*') ? 'active' : '' }}" href="{{ route('courses.index') }}">
-                    <i class="fas fa-video"></i><span class="menu-text"> Courses</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">
+                <i class="fas fa-video"></i><span class="menu-text"> Courses</span>
+            </a>
+        </li>
+        <li class="nav-item">
+                <a class="nav-link {{ request()->is('admin/blogs/*') ? 'active' : '' }}" href="{{ route('blogs.index') }}">
                     <i class="fas fa-blog"></i><span class="menu-text"> Blogs</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">
-                    <i class="fas fa-user"></i><span class="menu-text"> Students</span>
+                <a class="nav-link {{ request()->is('admin/users/*') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                    <i class="fas fa-user"></i><span class="menu-text"> users</span>
                 </a>
             </li>
         </ul>

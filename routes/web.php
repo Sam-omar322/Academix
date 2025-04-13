@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use App\Http\Controllers\AdminController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Home
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 // Course
 Route::get('/courses', [CourseController::class, 'showAllCourses'])->name('courses.showAll');
@@ -32,21 +36,13 @@ Route::get('/blogs/{blog}/details', [BlogController::class, 'showDetails'])->nam
 Route::post('/c/{course:id}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/c/{course:id}/comments', [CommentController::class, 'index'])->name('comments.index');
 
-Route::get('/', [HomeController::class, 'index'])->name('home.index');
-
-
 // Admin Panel
-// Route::prefix('/admin')->middleware(['auth:sanctum', 'check.update.permission', 'verified'])->group(function () {
-Route::prefix('/admin')->group(function () {
+Route::prefix('/admin')->middleware(['auth:sanctum', 'check.update.permission', 'verified'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::Resource('/courses', CourseController::class);
     Route::Resource('/blogs', BlogController::class);
-    // Route::resource('/books', BookController::class);
-    // Route::resource('/categories', CategoryController::class);
-    // Route::resource('/authors', AuthorController::class);
-    // Route::resource('/publishers', PublisherController::class);
-    // Route::resource('/users', UserController::class);
-    // Route::get("/allOrders", [PurchaseController::class, 'allOrders'])->name('admin.allorders');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::delete('/users/{user}/delete', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 Route::middleware([
@@ -55,6 +51,6 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('layouts.main');
     })->name('dashboard');
 });

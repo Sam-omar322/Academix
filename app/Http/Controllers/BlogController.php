@@ -4,55 +4,66 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class BlogController extends Controller
 {
-    // Display a listing of blogs
     public function index()
     {
-        $blogs = Blog::paginate(4);
-        return view('blogs.index', compact('blogs'));
+        $blogs = Blog::latest()->get();
+        $title = 'Blogs';
+        return view('admin.blogs.index', compact('blogs', 'title'));
     }
 
-    // Store a newly created blog
+    public function create()
+    {
+        $title = 'Add New Blog';
+        return view('admin.blogs.create', compact('title'));
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'user_id' => 'required|exists:users,id',
         ]);
 
-        $blog = Blog::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'user_id' => $request->user_id,
+        $validated['user_id'] = Auth::id();
+        Blog::create($validated);
+
+        Session::flash('flash_message', 'Blog Added successfully.');
+        return redirect()->route('blogs.index')->with('success', 'Blog created!');
+    }
+
+    public function show(Blog $blog)
+    {
+        return view('admin.blogs.show', compact('blog'));
+    }
+
+    public function edit(Blog $blog)
+    {
+        $title = 'Edit Blog';
+        return view('admin.blogs.edit', compact('blog', 'title'));
+    }
+
+    public function update(Request $request, Blog $blog)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
         ]);
 
-        return response()->json($blog, 201);
+        $blog->update($request->only(['title', 'content']));
+        Session::flash('flash_message', 'Blog Updated successfully.');
+        return redirect()->route('blogs.index')->with('success', 'Blog updated!');
     }
 
-    // Display the specified blog
-    public function show($id)
+    public function destroy(Blog $blog)
     {
-        $blog = Blog::findOrFail($id);
-        return view('blogs.show', compact('blog'));
-    }
-
-    // Update the specified blog
-    public function update(Request $request, $id)
-    {
-        $blog = Blog::findOrFail($id);
-        $blog->update($request->all());
-        return response()->json($blog);
-    }
-
-    // Remove the specified blog
-    public function destroy($id)
-    {
-        $blog = Blog::findOrFail($id);
         $blog->delete();
-        return response()->json(['message' => 'Blog deleted successfully']);
+        Session::flash('flash_message', 'Blog Deleted successfully.');
+        return redirect()->route('blogs.index')->with('success', 'Blog deleted!');
     }
 
     public function showAllBlogs()

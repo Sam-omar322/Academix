@@ -12,7 +12,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $blog->title }}</h5>
                         <p class="card-text text-muted">{{ Str::limit($blog->content, 100) }}</p>
-                        <a href="{{ route('blogs.show', $blog->id) }}" class="mt-auto btn btn-outline-primary btn-sm">{{ __('اقرأ المزيد') }}</a>
+                        <a href="{{ route('blogs.details', $blog->id) }}" class="mt-auto btn btn-outline-primary btn-sm">{{ __('اقرأ المزيد') }}</a>
                     </div>
                 </div>
             </div>

@@ -34,7 +34,6 @@
 
             <!-- Page Content -->
             <main>
-                <h2 class="m-4">Hi</h2>
                 {{ $slot }}
             </main>
         </div>

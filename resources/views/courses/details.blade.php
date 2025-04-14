@@ -24,8 +24,50 @@
         <h5>
             <strong>{{ __('السعر') }}:</strong> {{ $course->price }}$
         </h5>
-        <button class="btn btn-dark rounded-3">{{ __('شراء الآن') }}</button>
+        <button class="btn btn-dark rounded-3"></button>
+        @auth
+            <div class="form">
+                <input id="CourseId" type="hidden" value="{{ $course->id }}">
+                <button type="submit" class="btn btn-primary w-100 addCart">
+                    <i class="fas fa-cart-plus me-1"></i> {{ __('شراء الآن') }}
+                </button>
+            </div>
+        @endauth
     </div>
 
 </div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function () {
+        $('.addCart').on('click', function (event) {
+            event.preventDefault();
+
+            var token = '{{ csrf_token() }}';
+            var url = "{{ route('cart.add') }}";
+            var courseId = $(this).parents(".form").find("#CourseId").val()
+
+            $.ajax({
+                method: 'POST',
+                url: url,
+                data: {
+                    id: courseId,
+                    _token: token
+                },
+                success: function (data) {
+                    if (data.already_added) {
+                        alert(data.message); // e.g. "You have already added this course to your cart."
+                    } else {
+                        $('span.badge').text(data.num_of_product); // update cart count
+                        alert(data.message); // e.g. "Course added to cart successfully."
+                    }
+                },
+                error: function () {
+                    alert('Something went wrong! Please try again.');
+                }
+            });
+        });
+    });
+</script>
 @endsection

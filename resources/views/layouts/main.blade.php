@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('Academix') }}</title>
 
     {{-- Google Fonts --}}
@@ -62,7 +62,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto gap-3">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('/*') ? 'active' : '' }}" href="{{ route('home.index') }}">
                             {{ __('صفحة الرئيسية') }}
@@ -78,11 +78,24 @@
                             {{ __('جميع المقالات') }}
                         </a>
                     </li>
+                    @auth
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             {{ __('دوراتي') }}
                         </a>
                     </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cart.view') }}">
+                                @if(Auth::user()->CoursesInCart()->count() > 0)
+                                    <span class="badge bg-secondary cart-count">{{ Auth::user()->CoursesInCart()->count() }}</span>
+                                @else
+                                    <span class="badge bg-secondary cart-count">0</span>
+                                @endif
+                                {{__('عربة التسوق')}} 
+                                <i class="fas fa-shopping-cart"></i> 
+                            </a>
+                        </li>
+                    @endAuth
                 </ul>
 
                 {{-- User Dropdown --}}

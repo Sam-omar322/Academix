@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -79,5 +81,11 @@ class User extends Authenticatable
      public function isAdmin()
      {
          return $this->role === 'admin';
+     }
+
+     public function CoursesInCart()
+     {
+        // This method returns the courses that are in the user's cart but not yet purchased.
+         return $this->belongsToMany('App\Models\Course')->withPivot(['bought', 'price_at_purchase'])->wherePivot('bought', False);
      }
 }

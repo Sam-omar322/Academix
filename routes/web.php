@@ -7,6 +7,8 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +33,6 @@ Route::get('/courses/{course}/watch', [CourseController::class, 'watch'])->name(
 Route::get('/blogs', [BlogController::class, 'showAllBlogs'])->name('blogs.showAll');
 Route::get('/blogs/{blog}/details', [BlogController::class, 'showDetails'])->name('blogs.details');
 
-
-// Comment
-Route::post('/c/{course:id}/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::get('/c/{course:id}/comments', [CommentController::class, 'index'])->name('comments.index');
-
 // Admin Panel
 Route::prefix('/admin')->middleware(['auth:sanctum', 'check.update.permission', 'verified'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
@@ -43,6 +40,19 @@ Route::prefix('/admin')->middleware(['auth:sanctum', 'check.update.permission', 
     Route::Resource('/blogs', BlogController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::delete('/users/{user}/delete', [UserController::class, 'destroy'])->name('users.destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    // Comment
+    Route::post('/c/{course:id}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::get('/c/{course:id}/comments', [CommentController::class, 'index'])->name('comments.index');
+    // Cart
+    Route::post("/cart", [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+    Route::post('/removeOne/{course}', [CartController::class, 'removeOne'])->name('cart.remove_one');
+    // Purchase
+    Route::get('/checkout', [PurchaseController::class, 'creditCheckout'])->name('credit.checkout');
+    Route::post('/checkout', [PurchaseController::class, 'purchase'])->name('products.purchase');
 });
 
 Route::middleware([

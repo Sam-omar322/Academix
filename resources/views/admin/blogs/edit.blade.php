@@ -1,6 +1,6 @@
 @extends('layouts.dashbaord.layout')
 
-@section('title', 'Edit Blog')
+@section('title', __('تعديل المدونة'))
 
 @section('content')
 <div class="container mt-5">
@@ -21,7 +21,7 @@
         @method('PUT')
 
         <div class="mb-3">
-            <label for="title" class="form-label">{{ __('Blog Title') }}</label>
+            <label for="title" class="form-label">{{ __('عنوان المدونة') }}</label>
             <input type="text" class="form-control" name="title" id="title" value="{{ $blog->title }}" required>
             @error('title')
                 <small class="text-danger">{{ $message }}</small>
@@ -29,14 +29,14 @@
         </div>
 
         <div class="mb-3">
-            <label for="content" class="form-label">{{ __('Blog Content') }}</label>
+            <label for="content" class="form-label">{{ __('محتوى المدونة') }}</label>
             <textarea class="form-control" name="content" id="content" rows="3" required>{{ $blog->content }}</textarea>
             @error('content')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">{{ __('Update Blog') }}</button>
+        <button type="submit" class="btn btn-primary">{{ __('تحديث المدونة') }}</button>
     </form>
 </div>
 @endsection

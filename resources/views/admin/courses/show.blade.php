@@ -15,6 +15,7 @@
                     <h5 class="card-title">{{ __('الصورة المصغرة') }}</h5>
                 </div>
             </div>
+            <a href="{{ route('courses.edit', $course) }}" class="btn btn-primary mt-3"><i class="fas fa-edit"></i> {{ __('تعديل') }}</a>
         </div>
 
         <!-- بيانات الدورة -->

@@ -1,3 +1,3 @@
 <footer class="text-center mt-4 p-3 border-top">
-    <small>&copy; {{ date('Y') }} Academix Dashboard. All rights reserved.</small>
+    <small>&copy; {{ date('Y') }} {{ __('لوحة التحكم Academix. جميع الحقوق محفوظة.') }}</small>
 </footer>

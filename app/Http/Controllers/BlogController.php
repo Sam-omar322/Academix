@@ -32,7 +32,7 @@ class BlogController extends Controller
         $validated['user_id'] = Auth::id();
         Blog::create($validated);
 
-        Session::flash('flash_message', 'Blog Added successfully.');
+        Session::flash('flash_message', __('تم إضافة المدونة بنجاح'));
         return redirect()->route('blogs.index')->with('success', 'Blog created!');
     }
 
@@ -55,14 +55,14 @@ class BlogController extends Controller
         ]);
 
         $blog->update($request->only(['title', 'content']));
-        Session::flash('flash_message', 'Blog Updated successfully.');
+        Session::flash('flash_message', __('تم تحديث المدونة بنجاح'));
         return redirect()->route('blogs.index')->with('success', 'Blog updated!');
     }
 
     public function destroy(Blog $blog)
     {
         $blog->delete();
-        Session::flash('flash_message', 'Blog Deleted successfully.');
+        Session::flash('flash_message', __('تم حذف المدونة بنجاح'));
         return redirect()->route('blogs.index')->with('success', 'Blog deleted!');
     }
 

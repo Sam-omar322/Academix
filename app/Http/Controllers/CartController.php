@@ -21,7 +21,7 @@ class CartController extends Controller
         // Check if the course is already in the cart
         if ($user->coursesInCart->contains($course)) {
             return response()->json([
-                'message' => 'You have already added this course to your cart.',
+                'message' => __('لقد قمت بالفعل بإضافة هذه الدورة إلى سلة التسوق الخاصة بك.'),
                 'already_added' => true
             ], 200);
         }
@@ -29,7 +29,7 @@ class CartController extends Controller
         // Check if the user already owns this course
         if ($user->myCourses()->where('course_id', $course->id)->exists()) {
             return response()->json([
-                'message' => 'You already own this course.',
+                'message' => __('لقد قمت بالفعل بشراء هذه الدورة.'),
                 'already_purchased' => true
             ], 200);
         }
@@ -44,7 +44,7 @@ class CartController extends Controller
     
         return response()->json([
             'num_of_product' => $num_of_product,
-            'message' => 'Course added to cart successfully',
+            'message' => __('تمت إضافة الدورة إلى سلة التسوق الخاصة بك بنجاح.'),
             'already_added' => false
         ]);
     }

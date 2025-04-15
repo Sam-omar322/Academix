@@ -12,7 +12,6 @@
     {{-- Google Fonts --}}
      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
-
     {{-- Bootstrap CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -115,17 +114,17 @@
                             <img class="rounded-circle mx-2" width="28" height="28" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                             {{ Auth::user()->name }}
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu dropdown-menu-end" style="text-align: start !important;">
                             @if (Auth::user()->isAdmin())
-                            <li><a class="dropdown-item" href="{{ route('admin.index') }}">{{ __('Dashbaord') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.index') }}">{{ __('لوحة التحكم') }}</a></li>
                             <li><hr class="dropdown-divider"></li>
                             @endif
-                            <li><a class="dropdown-item" href="{{ route('profile.show') }}">{{ __('Profile') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.show') }}">{{ __('ملف الشخصي') }}</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button type="submit" class="dropdown-item">{{ __('Logout') }}</button>
+                                    <button type="submit" class="dropdown-item">{{ __('تسجيل الخروج') }}</button>
                                 </form>
                             </li>
                         </ul>
@@ -134,10 +133,10 @@
 
                     @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('تسجيل الدخول') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('تسجيل') }}</a>
                     </li>
                     @endguest
                 </ul>

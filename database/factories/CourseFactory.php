@@ -20,8 +20,8 @@ class CourseFactory extends Factory
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'price' => $this->faker->randomFloat(2, 10, 200), // Price between 10 and 200
-            'video_url' => $this->faker->url,
-            'thumbnail' => asset('storage/images/placeholder-course.jpg'),
+            'video_url' => asset('storage/videos/video1.mp4'),
+            'thumbnail' => NULL,
         ];
     }
 }

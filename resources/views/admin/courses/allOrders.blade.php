@@ -1,20 +1,20 @@
 @extends('layouts.Dashbaord.layout')
 
 @section('title')
-{{ __('All Course Purchases') }}
+    {{ __('جميع عمليات شراء الدورات') }}
 @endsection
 
 @section('content')
 <div class="row">
-    <h2 class="mb-4">All Course Purchases</h2>
+    <h2 class="mb-4">{{ __('جميع عمليات شراء الدورات') }}</h2>
     <div class="col-md-12">
         <table class="table table-striped table-bordered text-right" width="100%" cellspacing="0">
             <thead class="table-dark">
                 <tr>
-                    <th>Buyer</th>
-                    <th>Course</th>
-                    <th>Price</th>
-                    <th>Purchase Date</th>
+                    <th>{{ __('المشتري') }}</th>
+                    <th>{{ __('الدورة') }}</th>
+                    <th>{{ __('السعر') }}</th>
+                    <th>{{ __('تاريخ الشراء') }}</th>
                 </tr>
             </thead>
 
@@ -32,4 +32,3 @@
     </div>
 </div>
 @endsection
-

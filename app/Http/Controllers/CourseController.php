@@ -49,11 +49,11 @@ class CourseController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
-            'video_url' => 'storage/' . $videoPath, // نحفظ الرابط فقط
-            'thumbnail' => 'storage/' . $thumbnailPath,
+            'video_url' => '/storage/' . $videoPath, // نحفظ الرابط فقط
+            'thumbnail' => '/storage/' . $thumbnailPath,
         ]);
 
-        Session::flash('flash_message', 'Course Added successfully.');
+        Session::flash('flash_message', __('تم إضافة الدورة بنجاح'));
         return redirect()->route('courses.index');
     }
 
@@ -91,32 +91,32 @@ class CourseController extends Controller
         // حذف الصورة القديمة إذا وُجدت ثم رفع صورة جديدة
         if ($request->hasFile('thumbnail')) {
             if ($course->thumbnail) {
-                $thumbnailPath = str_replace('storage/', '', $course->thumbnail);
+                $thumbnailPath = str_replace('/storage/', '', $course->thumbnail);
                 if (Storage::disk('public')->exists($thumbnailPath)) {
                     Storage::disk('public')->delete($thumbnailPath);
                 }
             }
 
             $newThumbnail = $request->file('thumbnail')->store('thumbnails', 'public');
-            $course->thumbnail = 'storage/' . $newThumbnail;
+            $course->thumbnail = '/storage/' . $newThumbnail;
         }
 
         // حذف الفيديو القديم إذا وُجد ثم رفع فيديو جديد
         if ($request->hasFile('video_url')) {
             if ($course->video_url) {
-                $videoPath = str_replace('storage/', '', $course->video_url);
+                $videoPath = str_replace('/storage/', '', $course->video_url);
                 if (Storage::disk('public')->exists($videoPath)) {
                     Storage::disk('public')->delete($videoPath);
                 }
             }
 
             $newVideo = $request->file('video_url')->store('videos', 'public');
-            $course->video_url = 'storage/' . $newVideo;
+            $course->video_url = '/storage/' . $newVideo;
         }
 
         $course->save();
 
-        Session::flash('flash_message', 'Course Update successfully.');
+        Session::flash('flash_message', __('تم تحديث الدورة بنجاح'));
         return redirect()->route('courses.index')->with('success', 'تم تحديث الدورة بنجاح');
     }
 
@@ -126,9 +126,9 @@ class CourseController extends Controller
         $course = Course::findOrFail($id);
     
         // Remove "storage/" from the beginning of the path before deleting
-        $videoPath = str_replace('storage/', '', $course->video_url);
-        $thumbnailPath = str_replace('storage/', '', $course->thumbnail);
-    
+        $videoPath = str_replace('/storage/', '', $course->video_url);
+        $thumbnailPath = str_replace('/storage/', '', $course->thumbnail);
+
         if ($videoPath && Storage::disk('public')->exists($videoPath)) {
             Storage::disk('public')->delete($videoPath);
         }
@@ -139,7 +139,7 @@ class CourseController extends Controller
     
         $course->delete();
     
-        Session::flash('flash_message', 'تم حذف الدورة بنجاح.');
+        Session::flash('flash_message', __('تم حذف الدورة بنجاح'));
         return redirect()->route('courses.index');
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.dashbaord.layout')
 
-@section('title', 'Add New Blog')
+@section('title', __('إضافة مدونة جديدة'))
 
 @section('content')
 <div class="container mt-5">
@@ -20,7 +20,7 @@
         @csrf
 
         <div class="mb-3">
-            <label for="title" class="form-label">Blog Title</label>
+            <label for="title" class="form-label">{{ __('عنوان المدونة') }}</label>
             <input type="text" class="form-control" name="title" value="{{ old('title') }}" required>
             @error('title')
                 <small class="text-danger">{{ $message }}</small>
@@ -28,14 +28,14 @@
         </div>
 
         <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
+            <label for="content" class="form-label">{{ __('المحتوى') }}</label>
             <textarea class="form-control" name="content" rows="5" required>{{ old('content') }}</textarea>
             @error('content')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-success">Publish</button>
+        <button type="submit" class="btn btn-success">{{ __('نشر') }}</button>
     </form>
 </div>
 @endsection

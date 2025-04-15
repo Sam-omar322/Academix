@@ -16,22 +16,32 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $course = Course::find($request->id);
-
-        if (auth()->user()->coursesInCart->contains($course)) {
+        $user = auth()->user();
+    
+        // Check if the course is already in the cart
+        if ($user->coursesInCart->contains($course)) {
             return response()->json([
                 'message' => 'You have already added this course to your cart.',
                 'already_added' => true
             ], 200);
         }
-
-        auth()->user()->coursesInCart()->attach($request->id, [
+    
+        // Check if the user already owns this course
+        if ($user->myCourses()->where('course_id', $course->id)->exists()) {
+            return response()->json([
+                'message' => 'You already own this course.',
+                'already_purchased' => true
+            ], 200);
+        }
+    
+        $user->coursesInCart()->attach($request->id, [
             'price_at_purchase' => $course->price,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
-        $num_of_product = auth()->user()->coursesInCart()->count();
-
+    
+        $num_of_product = $user->coursesInCart()->count();
+    
         return response()->json([
             'num_of_product' => $num_of_product,
             'message' => 'Course added to cart successfully',

@@ -80,7 +80,7 @@
                     </li>
                     @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{route('courses.myOrders')}}">
                             {{ __('دوراتي') }}
                         </a>
                     </li>

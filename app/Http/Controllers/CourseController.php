@@ -168,6 +168,5 @@ class CourseController extends Controller
         // }
 
         return view('courses.watch', compact('course'));
-    }
-
+    }    
 }

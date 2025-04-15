@@ -24,16 +24,30 @@
         <h5>
             <strong>{{ __('السعر') }}:</strong> {{ $course->price }}$
         </h5>
-        <button class="btn btn-dark rounded-3"></button>
         @auth
-            <div class="form">
-                <input id="CourseId" type="hidden" value="{{ $course->id }}">
-                <button type="submit" class="btn btn-primary w-100 addCart">
-                    <i class="fas fa-cart-plus me-1"></i> {{ __('شراء الآن') }}
-                </button>
-            </div>
+            @php
+                $userOwnsThisCourse = auth()->user()->myCourses()->where('course_id', $course->id)->exists();
+            @endphp
+
+            @if(!$userOwnsThisCourse)
+                <div class="form">
+                    <input id="CourseId" type="hidden" value="{{ $course->id }}">
+                    <button type="submit" class="btn btn-dark rounded-3 addCart">
+                        <i class="fas fa-cart-plus me-1"></i> {{ __('شراء الآن') }}
+                    </button>
+                </div>
+            @else
+                <div class="alert alert-success">
+                    {{ __('تم شراء هذه الدورة بالفعل') }}
+                </div>
+            @endif
         @endauth
-    </div>
+            @guest
+                <div class="alert alert-warning">
+                    {{ __('يرجى تسجيل الدخول لشراء الدورة') }}
+                </div>
+            @endguest
+        </div>
 
 </div>
 @endsection

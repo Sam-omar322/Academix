@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Course;
+use App\Models\Shopping;
 
 class PurchaseController extends Controller
 {
@@ -26,16 +27,11 @@ class PurchaseController extends Controller
         return view('credit.checkout', compact('total', 'intent'));
     }
 
-
-
-
-
-
     public function purchase(Request $request)
     {
         $user = $request->user();
         $paymentMethod = $request->input('payment_method');
-        
+
         $userId = auth()->user()->id;
         $courses = User::find($userId)->coursesInCart;
         $total = 0;
@@ -64,22 +60,17 @@ class PurchaseController extends Controller
         return redirect('/cart');   
     }
 
+    public function myOrders()
+    {
+        $user = auth()->user();
 
+        $courses = $user->myCourses()->paginate(4);
+    
+        return view('courses.my_courses', compact('courses'));
+    }
 
-
-
-
-
-
-    // public function myOrders() {
-    //     $userId = auth()->user()->id;
-    //     $myCourses = User::find($userId)->purchasedCourses;
-
-    //     return view('course.myorders', compact('myCourses'));
-    // }
-
-    // public function allOrders() {
-    //     $allCourses = Shopping::with(['user', 'course'])->where('bought', true)->get();
-    //     return view('admin.courses.allOrders', compact('allCourses'));
-    // }
+    public function allOrders() {
+        $allCourses = Shopping::with(['user', 'course'])->where('bought', true)->get();
+        return view('admin.courses.allOrders', compact('allCourses'));
+    }
 }

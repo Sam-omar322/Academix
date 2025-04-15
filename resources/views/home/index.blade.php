@@ -36,7 +36,7 @@
 <a href="{{ route('blogs.showAll') }}" class="btn btn-light btn-lg mt-4 mb-4">{{ __('عرض جميع المقالات') }}</a>
 <section class="py-5">
     <div class="container">
-        <h2 class="mb-4 text-center">{{ __('المدونات') }}</h2>
+        <h2 class="mb-4 text-center">{{ __('المقالات') }}</h2>
         <div class="row g-4">
         @forelse($blogs as $blog)
             <div class="col-md-4">

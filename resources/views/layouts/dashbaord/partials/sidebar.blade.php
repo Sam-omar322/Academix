@@ -27,6 +27,11 @@
                     <i class="fas fa-user"></i><span class="menu-text"> users</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('admin/allOrders/*') ? 'active' : '' }}" href="{{ route('admin.allorders') }}">
+                    <i class="fas fa-user"></i><span class="menu-text"> Orders</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

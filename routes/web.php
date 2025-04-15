@@ -40,6 +40,8 @@ Route::prefix('/admin')->middleware(['auth:sanctum', 'check.update.permission', 
     Route::Resource('/blogs', BlogController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::delete('/users/{user}/delete', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get("/allOrders", [PurchaseController::class, 'allOrders'])->name('admin.allorders');
+
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -53,6 +55,10 @@ Route::middleware(['auth'])->group(function () {
     // Purchase
     Route::get('/checkout', [PurchaseController::class, 'creditCheckout'])->name('credit.checkout');
     Route::post('/checkout', [PurchaseController::class, 'purchase'])->name('products.purchase');
+    Route::get("/myCourses", [PurchaseController::class, 'myOrders'])->name('courses.myOrders');
+
+    // Watch
+    // Route::get('/watch/{course}', [CourseController::class, 'watch'])->name('courses.watch');
 });
 
 Route::middleware([

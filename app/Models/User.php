@@ -88,4 +88,9 @@ class User extends Authenticatable
         // This method returns the courses that are in the user's cart but not yet purchased.
          return $this->belongsToMany('App\Models\Course')->withPivot(['bought', 'price_at_purchase'])->wherePivot('bought', False);
      }
+
+     public function myCourses() {
+        // This method returns the courses that the user has purchased.
+        return $this->belongsToMany('App\Models\Course')->withPivot(['bought', 'price_at_purchase', 'created_at'])->wherePivot('bought', true);
+     }
 }

@@ -27,7 +27,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 // Course
 Route::get('/courses', [CourseController::class, 'showAllCourses'])->name('courses.showAll');
 Route::get('/courses/{course}/details', [CourseController::class, 'showDetails'])->name('courses.details');
-Route::get('/courses/{course}/watch', [CourseController::class, 'watch'])->name('courses.watch');
 
 // Blogs
 Route::get('/blogs', [BlogController::class, 'showAllBlogs'])->name('blogs.showAll');
@@ -58,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/myCourses", [PurchaseController::class, 'myOrders'])->name('courses.myOrders');
 
     // Watch
-    // Route::get('/watch/{course}', [CourseController::class, 'watch'])->name('courses.watch');
+    Route::get('/watch/{course}', [CourseController::class, 'watch'])->name('courses.watch');
 });
 
 Route::middleware([

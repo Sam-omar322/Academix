@@ -11,14 +11,6 @@
     <!-- وصف الدورة -->
     <p class="lead">{{ __($course->description) }}</p>
 
-    <!-- الفيديو -->
-    <div class="ratio ratio-16x9 mb-4">
-        <video width="100%" height="300" controls preload="none">
-            <source src="{{ asset($course->video_url) }}" type="video/mp4">
-            {{ __('المتصفح لا يدعم تشغيل الفيديو.') }}
-        </video>
-    </div>
-
     <!-- سعر الدورة -->
     <div class="mb-5 d-flex align-items-center gap-3">
         <h5>
@@ -39,6 +31,7 @@
             @else
                 <div class="alert alert-success">
                     {{ __('تم شراء هذه الدورة بالفعل') }}
+                    <a href="{{ route('courses.watch', $course->id) }}">{{ __('شاهد') }}</a>
                 </div>
             @endif
         @endauth

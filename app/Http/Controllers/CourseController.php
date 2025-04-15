@@ -155,18 +155,16 @@ class CourseController extends Controller
         return view('courses.details', compact('course'));
     }
 
-    // Watch the course
     public function watch(Course $course)
     {
-        // $user = auth()->user();
-
-        // $hasAccess = $user->courses()->where('course_id', $course->id)->exists();
-
-        // if (! $hasAccess) {
-        //     return redirect()->route('courses.show', $course->id)
-        //                     ->with('error', __('يجب شراء الدورة أولًا لمشاهدتها'));
-        // }
-
+        $user = auth()->user();
+    
+        $hasAccess = $user->myCourses()->where('course_id', $course->id)->exists();
+    
+        if (! $hasAccess) {
+            return redirect('/');
+        }
+    
         return view('courses.watch', compact('course'));
-    }    
+    }
 }

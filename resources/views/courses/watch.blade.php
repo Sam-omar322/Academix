@@ -4,6 +4,15 @@
 @section('content')
 <h1>{{$course->id}}</h1>
 
+
+    <!-- الفيديو -->
+    <div class="ratio ratio-16x9 mb-4">
+        <video width="100%" height="300" controls preload="none">
+            <source src="{{ asset($course->video_url) }}" type="video/mp4">
+            {{ __('المتصفح لا يدعم تشغيل الفيديو.') }}
+        </video>
+    </div>
+    
    <!-- التعليقات -->
    <h3 class="mb-4">{{ __('التعليقات') }}</h3>
 

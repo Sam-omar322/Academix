@@ -28,23 +28,24 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">  
-    <div id="success" style="display: none;" class="col-md-8 text-center h4 p-4 bg-success text-light rounded">
-            Purchase completed successfully!
+        <div id="success" style="display: none;" class="col-md-8 text-center h4 p-4 bg-success text-light rounded">
+            {{ __('تمت عملية الشراء بنجاح!') }}
         </div>
-    <div class="col-md-8">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Pay by credit card</div>
+                <div class="card-header">{{ __('الدفع عن طريق البطاقة الائتمانية') }}</div>
                 <form method="POST" action="{{ route('products.purchase') }}" class="card-form mt-3 mb-3 mx-4">
                     @csrf
                     <input type="hidden" name="payment_method" class="payment-method">
-                    <input class="StripeElement mb-3" name="card_holder_name" placeholder="Card holder name">
+                    <input class="StripeElement mb-3 card_holder_name" name="card_holder_name" placeholder="{{ __('اسم حامل البطاقة') }}">
                     <div>
                         <div id="card-element"></div>
                     </div>
                     <div id="card-errors" role="alert"></div>
                     <div class="form-group mt-3">
                         <button type="submit" class="btn bg-cart pay">
-                            Pay {{$total}} $ <span class="icon" hidden><i class="fas fa-sync fa-spin"></i></span>
+                            {{ __('الدفع') }} {{$total}} $ 
+                            <span class="icon" hidden><i class="fas fa-sync fa-spin"></i></span>
                         </button>
                     </div>
                 </form>
@@ -92,7 +93,7 @@
             }
         ).then(function (result) {
             if (result.error) {
-                toastr.error('The data you entered contains errors! Check it and try again.')
+                toastr.error('{{ __('البيانات التي أدخلتها تحتوي على أخطاء! يرجى التحقق منها والمحاولة مرة أخرى.') }}')
                 $('button.pay').removeAttr('disabled')
             } else {
                 paymentMethod = result.setupIntent.payment_method

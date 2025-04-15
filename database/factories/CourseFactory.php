@@ -21,7 +21,7 @@ class CourseFactory extends Factory
             'description' => $this->faker->paragraph,
             'price' => $this->faker->randomFloat(2, 10, 200), // Price between 10 and 200
             'video_url' => $this->faker->url,
-            'thumbnail' => 'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=',
+            'thumbnail' => asset('storage/images/placeholder-course.jpg'),
         ];
     }
 }

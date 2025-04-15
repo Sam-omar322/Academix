@@ -6,8 +6,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('Academix') }}</title>
 
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
     {{-- Google Fonts --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
 
     {{-- Bootstrap CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +21,12 @@
 
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden !important;
+        }
+
+        h1, h2, h3, p, a, button {
+            font-family: 'Cairo', sans-serif !important;
         }
         .bg-cart {
             background-color: #ffc107;
@@ -80,16 +89,16 @@
                     </li>
                     @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('courses.myOrders')}}">
+                        <a class="nav-link {{ request()->is('myCourses*') ? 'active' : '' }}" href="{{route('courses.myOrders')}}">
                             {{ __('دوراتي') }}
                         </a>
                     </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cart.view') }}">
+                            <a class="nav-link {{ request()->is('cart*') ? 'active' : '' }}" href="{{ route('cart.view') }}">
                                 @if(Auth::user()->CoursesInCart()->count() > 0)
                                     <span class="badge bg-secondary cart-count">{{ Auth::user()->CoursesInCart()->count() }}</span>
                                 @else
-                                    <span class="badge bg-secondary cart-count">0</span>
+                                    <span class="badge bg-secondary cart-count" id="cart-count">0</span>
                                 @endif
                                 {{__('عربة التسوق')}} 
                                 <i class="fas fa-shopping-cart"></i> 

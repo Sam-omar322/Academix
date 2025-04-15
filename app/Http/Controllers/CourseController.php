@@ -145,7 +145,7 @@ class CourseController extends Controller
 
     public function showAllCourses()
     {
-        $courses = Course::orderBy('created_at', 'desc')->paginate(4);
+        $courses = Course::orderBy('created_at', 'desc')->paginate(6);
         return view('courses.index', compact('courses'));
     }    
 

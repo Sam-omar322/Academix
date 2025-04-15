@@ -1,76 +1,102 @@
 @extends('layouts.main')
 
+@section('title', __('سلة المشتريات'))
+
 @section('content')
 <div class="container my-5">
     <div class="row justify-content-center">
-        <div id="success" style="display: none;" class="col-md-8 text-center h4 p-4 bg-success text-light rounded">
-            Purchase completed successfully!
-        </div>
+        <div class="col-lg-10 col-xl-9">
 
-        @if(session('message'))
-            <div class="col-md-8 text-center h4 p-4 bg-success text-light rounded">
-                {{ session('message') }}
-            </div> 
-        @endif
+            {{-- رسالة نجاح الجلسة --}}
+            @if(session('message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> {{ session('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('إغلاق') }}"></button>
+                </div>
+            @endif
 
-        <div class="col-md-12">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white text-center h5">
-                    Shopping Cart
+            {{-- رسالة خطأ --}}
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i> {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('إغلاق') }}"></button>
+                </div>
+            @endif
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3">
+                    <h4 class="mb-0 text-center fw-bold">
+                        <i class="fas fa-shopping-cart me-2 text-primary"></i>{{ __('سلة المشتريات الخاصة بك') }}
+                    </h4>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body p-4">
                     @if($items->count())
 
-                    <table class="table table-bordered table-hover text-center">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Thumbnail</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        @php $totalPrice = 0; @endphp
-                        <tbody>
-                        @foreach($items as $item)
-                            <tr>
-                                <td>
-                                    <img src="{{ asset($item->thumbnail) }}" alt="Thumbnail" width="60" height="60" class="rounded">
-                                </td>
-                                <td>{{ $item->title }}</td>
-                                <td>
-                                    {{ number_format($item->pivot->price_at_purchase, 2) }} $
-                                    @php $totalPrice += $item->pivot->price_at_purchase; @endphp
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <form method="post" action="{{ route('cart.remove_one', $item->id) }}">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle text-center">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 15%;">{{ __('العنصر') }}</th>
+                                    <th class="text-start">{{ __('عنوان الدورة') }}</th>
+                                    <th style="width: 15%;">{{ __('السعر') }}</th>
+                                    <th style="width: 15%;">{{ __('الإجراء') }}</th>
+                                </tr>
+                            </thead>
+                            @php $totalPrice = 0; @endphp
+                            <tbody>
+                            @foreach($items as $item)
+                                <tr>
+                                    <td>
+                                        <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->title }}" width="80" height="50" class="img-thumbnail p-0 border-0">
+                                    </td>
+                                    <td class="text-start fw-medium">
+                                        <a href="{{ route('courses.details', $item->id) }}" class="text-decoration-none text-dark">{{ $item->title }}</a>
+                                    </td>
+                                    <td class="fw-medium">
+                                        {{ number_format($item->pivot->price_at_purchase, 2) }}$
+                                        @php $totalPrice += $item->pivot->price_at_purchase; @endphp
+                                    </td>
+                                    <td>
+                                        <form method="post" action="{{ route('cart.remove_one', $item->id) }}" class="d-inline">
                                             @csrf
-                                            <button class="btn btn-danger btn-sm mx-1" type="submit">
-                                                <i class="fas fa-trash"></i> Remove
+                                            <button class="btn btn-outline-danger btn-sm border-0" type="submit" title="{{ __('إزالة العنصر') }}">
+                                                <i class="fas fa-times-circle fa-lg"></i>
                                             </button>
                                         </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <h4 class="text-center mt-4">
-                        Total Amount: <span class="text-success">{{ number_format($totalPrice, 2) }} $</span>
-                    </h4>
-
-                    <div class="d-flex justify-content-between align-items-start mt-4">
-                        <a href="{{ route('credit.checkout') }}" class="btn btn-primary ms-3">
-                            <i class="fas fa-credit-card"></i> Pay with Credit Card
-                        </a>
+                    {{-- ملخص السلة والإجراءات --}}
+                    <div class="row mt-4 pt-3 border-top">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <a href="{{ route('courses.showAll') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i> {{ __('متابعة التسوق') }}
+                            </a>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <h4 class="mb-3">
+                                {{ __('الإجمالي:') }} <span class="fw-bold text-success">{{ number_format($totalPrice, 2) }}$</span>
+                            </h4>
+                            <a href="{{ route('credit.checkout') }}" class="btn btn-success btn-lg rounded-pill px-4 w-100 w-md-auto">
+                                <i class="fas fa-shield-alt me-2"></i> {{ __('المتابعة للدفع الآمن') }}
+                            </a>
+                        </div>
                     </div>
 
                     @else
-                        <div class="alert alert-info text-center">
-                            No courses in the cart.
+                        {{-- رسالة السلة الفارغة --}}
+                        <div class="text-center py-5">
+                            <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                            <h4 class="mb-3">{{ __('سلتك فارغة حالياً.') }}</h4>
+                            <p class="text-muted mb-4">{{ __('يبدو أنك لم تقم بإضافة أي دورات حتى الآن.') }}</p>
+                            <a href="{{ route('courses.showAll') }}" class="btn btn-primary rounded-pill px-4">
+                                <i class="fas fa-search me-2"></i> {{ __('تصفح الدورات') }}
+                            </a>
                         </div>
                     @endif
                 </div>

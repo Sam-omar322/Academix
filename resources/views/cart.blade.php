@@ -48,7 +48,7 @@
                             @foreach($items as $item)
                                 <tr>
                                     <td>
-                                        <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->title }}" width="80" height="50" class="img-thumbnail p-0 border-0">
+                                        <img src="{{ $course->thumbnail ?? asset('storage/images/placeholder-course.jpg') }}" alt="{{ $item->title }}" width="80" height="50" class="img-thumbnail p-0 border-0">
                                     </td>
                                     <td class="text-start fw-medium">
                                         <a href="{{ route('courses.details', $item->id) }}" class="text-decoration-none text-dark">{{ $item->title }}</a>

@@ -117,7 +117,7 @@ class CourseController extends Controller
         $course->save();
 
         Session::flash('flash_message', __('تم تحديث الدورة بنجاح'));
-        return redirect()->route('courses.index')->with('success', 'تم تحديث الدورة بنجاح');
+        return redirect()->route('courses.index');
     }
 
     // Remove the specified course from storage

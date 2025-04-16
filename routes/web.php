@@ -60,6 +60,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/watch/{course}', [CourseController::class, 'watch'])->name('courses.watch');
 });
 
+Route::get('lang/{lang}', function ($lang) {
+    if (!in_array($lang, ['ar', 'en'])) {
+        abort(400);
+    }
+
+    if (auth()->check()) {
+        auth()->user()->update(['lang' => $lang]);
+    }
+
+    session()->put('locale', $lang);
+    app()->setLocale($lang);
+
+    return back();
+})->name('lang.switch');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

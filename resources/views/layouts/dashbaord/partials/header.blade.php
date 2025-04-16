@@ -2,6 +2,16 @@
     <div class="container-fluid">
         <span class="navbar-brand">{{ __('أكاديمكس') }}</span>
         <ul class="navbar-nav">
+            <li class="nav-item dropdown mx-3 mt-1">
+                <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown">
+                    🌐 {{ app()->getLocale() === 'ar' ? 'العربية' : 'English' }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown" style="text-align: start !important;">
+                    <li><a class="dropdown-item" href="{{ route('lang.switch', 'ar') }}">العربية</a></li>
+                    <li><a class="dropdown-item" href="{{ route('lang.switch', 'en') }}">English</a></li>
+                </ul>
+            </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
                     <img class="rounded-circle mx-2" width="28" height="28" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />

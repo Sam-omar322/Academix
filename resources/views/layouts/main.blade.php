@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir='{{ app()->getLocale() == "ar" ? "rtl" : "ltr" }}'>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,6 +104,16 @@
                             </a>
                         </li>
                     @endAuth
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown">
+                            🌐 {{ app()->getLocale() === 'ar' ? 'العربية' : 'English' }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown" style="text-align: start !important;">
+                            <li><a class="dropdown-item" href="{{ route('lang.switch', 'ar') }}">العربية</a></li>
+                            <li><a class="dropdown-item" href="{{ route('lang.switch', 'en') }}">English</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
                 {{-- User Dropdown --}}

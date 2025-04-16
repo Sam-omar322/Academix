@@ -18,12 +18,13 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if ($user->role === 'admin') {
-            return redirect()->back()->with('error', 'Admin user cannot be deleted.');
+            Session::flash('flash_message', 'لا يمكن حذف الادمن');
+            return redirect()->back();
         }
     
         $user->delete();
 
-        Session::flash('flash_message', 'User Deleted successfully.');
+        Session::flash('flash_message', 'تم حذف المستخدم بنجاح');
         return redirect()->route('users.index');
     }
     
